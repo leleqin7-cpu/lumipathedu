@@ -1,0 +1,1665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LumiPath Education — Illuminate Your Path</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --crimson: #9B1C2E;
+    --crimson-dark: #6B0D1E;
+    --crimson-glow: rgba(155,28,46,0.35);
+    --amber: #E07B00;
+    --amber-light: #F5A623;
+    --amber-glow: rgba(245,166,35,0.3);
+    --cream: #FAF7F2;
+    --charcoal: #1A1A1A;
+    --mid: #4A4A4A;
+    --light: #8A8A8A;
+    --white: #FFFFFF;
+
+    /* Glass variables */
+    --glass-bg: rgba(255,255,255,0.08);
+    --glass-bg-light: rgba(255,255,255,0.12);
+    --glass-border: rgba(255,255,255,0.18);
+    --glass-border-strong: rgba(255,255,255,0.28);
+    --glass-shadow: 0 8px 32px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.15);
+    --glass-shadow-hover: 0 24px 64px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.2);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: #0a0612;
+    color: var(--white);
+    overflow-x: hidden;
+  }
+
+  /* ─── GLOBAL SCENE BACKGROUND ─── */
+  .scene-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .scene-bg::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 70% 20%, rgba(155,28,46,0.22) 0%, transparent 65%),
+      radial-gradient(ellipse 60% 50% at 20% 80%, rgba(107,13,30,0.18) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 40% at 85% 70%, rgba(224,123,0,0.12) 0%, transparent 55%),
+      linear-gradient(160deg, #0a0612 0%, #12091e 40%, #0d0a18 100%);
+  }
+  /* Orb 1 */
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    animation: orbFloat 12s ease-in-out infinite alternate;
+  }
+  .orb-1 { width: 600px; height: 600px; background: radial-gradient(circle, rgba(155,28,46,0.28) 0%, transparent 70%); top: -100px; right: -100px; animation-delay: 0s; }
+  .orb-2 { width: 400px; height: 400px; background: radial-gradient(circle, rgba(245,166,35,0.18) 0%, transparent 70%); bottom: 200px; left: -80px; animation-delay: -4s; }
+  .orb-3 { width: 500px; height: 500px; background: radial-gradient(circle, rgba(107,13,30,0.2) 0%, transparent 70%); top: 50%; left: 50%; animation-delay: -8s; }
+  @keyframes orbFloat { from { transform: translate(0,0) scale(1); } to { transform: translate(30px, -40px) scale(1.08); } }
+
+  /* Floating particles */
+  .particle {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.6);
+    animation: particleFloat linear infinite;
+  }
+  @keyframes particleFloat {
+    0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+    10% { opacity: 0.6; }
+    90% { opacity: 0.4; }
+    100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5%;
+    height: 72px;
+    background: rgba(10,6,18,0.6);
+    backdrop-filter: blur(24px) saturate(1.8);
+    -webkit-backdrop-filter: blur(24px) saturate(1.8);
+    border-bottom: 1px solid var(--glass-border);
+    transition: all 0.3s;
+  }
+  .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  .nav-logo-mark {
+    width: 38px; height: 38px;
+    background: linear-gradient(135deg, var(--crimson), var(--amber));
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 13px; font-weight: 700; color: white;
+    box-shadow: 0 4px 16px var(--crimson-glow);
+  }
+  .nav-logo-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px; font-weight: 600; color: white;
+    letter-spacing: 0.3px;
+  }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    text-decoration: none; font-size: 14px; font-weight: 400;
+    color: rgba(255,255,255,0.6); letter-spacing: 0.2px;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: white; }
+  .nav-cta {
+    background: linear-gradient(135deg, var(--crimson), #c0203a) !important;
+    color: white !important;
+    padding: 10px 22px; border-radius: 8px;
+    font-weight: 500 !important;
+    box-shadow: 0 4px 20px var(--crimson-glow);
+    transition: transform 0.2s, box-shadow 0.2s !important;
+  }
+  .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 8px 32px var(--crimson-glow) !important; }
+
+  /* ─── HERO ─── */
+  #home {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 72px;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+  }
+  .hero-left {
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 80px 5% 80px 8%;
+    position: relative; z-index: 2;
+  }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 2.5px; text-transform: uppercase;
+    color: var(--amber-light);
+    margin-bottom: 28px;
+    animation: fadeUp 0.6s ease both;
+  }
+  .hero-eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--amber-light); }
+  .hero-h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(48px, 5.5vw, 80px);
+    font-weight: 700;
+    line-height: 1.06;
+    color: white;
+    margin-bottom: 28px;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+  .hero-h1 em { font-style: italic; color: var(--amber-light); }
+  .hero-sub {
+    font-size: 16px; line-height: 1.8;
+    color: rgba(255,255,255,0.55);
+    max-width: 440px;
+    margin-bottom: 44px;
+    font-weight: 300;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+  .hero-actions {
+    display: flex; gap: 16px; flex-wrap: wrap;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--crimson) 0%, #c02035 100%);
+    color: white; padding: 15px 36px;
+    border-radius: 10px; font-size: 15px; font-weight: 600;
+    text-decoration: none; border: none; cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 8px 32px var(--crimson-glow), inset 0 1px 0 rgba(255,255,255,0.15);
+    display: inline-block;
+  }
+  .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 16px 48px rgba(155,28,46,0.5); }
+  .btn-glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    color: rgba(255,255,255,0.85);
+    padding: 15px 36px;
+    border-radius: 10px; font-size: 15px; font-weight: 500;
+    text-decoration: none;
+    border: 1px solid var(--glass-border-strong);
+    transition: all 0.3s;
+    display: inline-block;
+  }
+  .btn-glass:hover { background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.4); transform: translateY(-2px); }
+
+  .hero-stats {
+    display: flex; gap: 36px;
+    margin-top: 56px; padding-top: 32px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    animation: fadeUp 0.6s 0.4s ease both;
+  }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 38px; font-weight: 700;
+    color: white; display: block;
+    line-height: 1;
+  }
+  .stat-num span { color: var(--amber-light); }
+  .stat-label { font-size: 12px; color: rgba(255,255,255,0.4); font-weight: 400; letter-spacing: 0.5px; margin-top: 4px; }
+
+  /* ─── HERO RIGHT — 3D VISUAL ─── */
+  .hero-right {
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  /* Giant atmospheric glow sphere */
+  .hero-sphere {
+    position: absolute;
+    width: 640px; height: 640px;
+    border-radius: 50%;
+    background: radial-gradient(ellipse at 35% 30%,
+      rgba(255,255,255,0.08) 0%,
+      rgba(155,28,46,0.28) 30%,
+      rgba(107,13,30,0.45) 60%,
+      rgba(40,4,12,0.8) 85%,
+      transparent 100%);
+    box-shadow:
+      inset -60px -60px 120px rgba(0,0,0,0.6),
+      inset 30px 30px 80px rgba(255,200,100,0.06),
+      0 0 120px rgba(155,28,46,0.25),
+      0 0 240px rgba(155,28,46,0.12);
+    animation: spherePulse 8s ease-in-out infinite alternate;
+  }
+  @keyframes spherePulse {
+    from { box-shadow: inset -60px -60px 120px rgba(0,0,0,0.6), inset 30px 30px 80px rgba(255,200,100,0.06), 0 0 120px rgba(155,28,46,0.25), 0 0 240px rgba(155,28,46,0.12); }
+    to { box-shadow: inset -60px -60px 120px rgba(0,0,0,0.6), inset 30px 30px 80px rgba(255,200,100,0.1), 0 0 160px rgba(155,28,46,0.35), 0 0 320px rgba(155,28,46,0.18); }
+  }
+
+  /* Specular highlight ring */
+  .hero-sphere-ring {
+    position: absolute;
+    width: 680px; height: 680px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.08);
+    box-shadow: 0 0 80px rgba(155,28,46,0.2);
+    animation: spherePulse 8s ease-in-out infinite alternate-reverse;
+  }
+  .hero-sphere-ring-2 {
+    position: absolute;
+    width: 780px; height: 780px;
+    border-radius: 50%;
+    border: 1px solid rgba(155,28,46,0.12);
+  }
+
+  /* University floating badges */
+  .hero-pill {
+    position: absolute; top: 15%;
+    background: rgba(255,255,255,0.09);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.22);
+    border-radius: 100px;
+    padding: 10px 22px;
+    color: rgba(255,255,255,0.9);
+    font-size: 13px; font-weight: 500;
+    letter-spacing: 0.3px;
+    box-shadow: var(--glass-shadow);
+    animation: floatA 6s ease-in-out infinite;
+  }
+  @keyframes floatA { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+
+  .hero-uni-logos {
+    position: absolute;
+    right: 32px; top: 50%; transform: translateY(-50%);
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .uni-badge {
+    background: rgba(255,255,255,0.07);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,0.16);
+    border-radius: 10px;
+    padding: 9px 18px;
+    color: rgba(255,255,255,0.85);
+    font-size: 13px; font-weight: 500;
+    white-space: nowrap;
+    box-shadow: var(--glass-shadow);
+    transition: all 0.3s;
+  }
+  .uni-badge:hover { background: rgba(255,255,255,0.13); border-color: rgba(255,255,255,0.3); transform: translateX(-4px); }
+
+  .hero-card {
+    position: absolute; bottom: 80px; left: 20px;
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(24px) saturate(1.8);
+    -webkit-backdrop-filter: blur(24px) saturate(1.8);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 16px;
+    padding: 22px 26px;
+    box-shadow: var(--glass-shadow);
+    max-width: 220px;
+    animation: floatA 7s ease-in-out 1s infinite;
+  }
+  .hero-card-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 42px; font-weight: 700;
+    color: var(--amber-light);
+    line-height: 1;
+  }
+  .hero-card-text { font-size: 12px; color: rgba(255,255,255,0.6); margin-top: 6px; line-height: 1.6; }
+
+  /* large decorative letter */
+  .hero-deco-letter {
+    position: absolute;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 280px; font-weight: 700;
+    color: rgba(155,28,46,0.06);
+    letter-spacing: -20px;
+    pointer-events: none;
+    user-select: none;
+    bottom: -30px; left: -20px;
+    z-index: 0;
+    line-height: 1;
+  }
+
+  /* ─── TICKER ─── */
+  .ticker-wrap {
+    position: relative; z-index: 1;
+    padding: 14px 0; overflow: hidden;
+    background: linear-gradient(90deg, rgba(155,28,46,0.6), rgba(107,13,30,0.8), rgba(155,28,46,0.6));
+    border-top: 1px solid rgba(255,255,255,0.08);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .ticker-track {
+    display: inline-flex; gap: 0;
+    animation: ticker 35s linear infinite;
+  }
+  .ticker-item {
+    display: inline-flex; align-items: center; gap: 12px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px; font-weight: 700;
+    color: rgba(255,255,255,0.8); letter-spacing: 1.5px;
+    text-transform: uppercase; padding: 0 32px;
+  }
+  .ticker-dot { width: 5px; height: 5px; background: var(--amber-light); border-radius: 50%; flex-shrink: 0; }
+  @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+  /* ─── SECTION COMMONS ─── */
+  section { position: relative; z-index: 1; }
+  .section-eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 2.5px; text-transform: uppercase;
+    color: var(--amber-light);
+    margin-bottom: 18px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-eyebrow::before { content: ''; display: block; width: 24px; height: 1px; background: var(--amber-light); }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 4vw, 58px);
+    font-weight: 700; line-height: 1.08;
+    color: white; margin-bottom: 20px;
+  }
+  .section-title em { color: var(--amber-light); font-style: italic; }
+  .section-body { font-size: 15px; line-height: 1.8; color: rgba(255,255,255,0.5); font-weight: 300; max-width: 540px; }
+
+  /* ─── ABOUT ─── */
+  #about {
+    padding: 120px 8%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    background: transparent;
+  }
+  .about-img-col { position: relative; }
+  .about-img-main {
+    width: 100%; aspect-ratio: 4/5;
+    background: url('https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=700&q=80') center/cover;
+    border-radius: 24px;
+    position: relative;
+    box-shadow: 0 40px 100px rgba(0,0,0,0.5);
+  }
+  .about-img-main::after {
+    content: '';
+    position: absolute; inset: 0;
+    border-radius: 24px;
+    background: linear-gradient(180deg, transparent 50%, rgba(10,6,18,0.6) 100%);
+  }
+  .about-img-accent {
+    position: absolute;
+    bottom: -24px; right: -24px;
+    width: 55%; aspect-ratio: 1;
+    background: url('https://images.unsplash.com/photo-1568992688065-536aad8a12f6?w=400&q=80') center/cover;
+    border-radius: 16px;
+    border: 2px solid rgba(255,255,255,0.12);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5), var(--glass-shadow);
+  }
+  .about-badge {
+    position: absolute;
+    top: 28px; left: -24px;
+    background: linear-gradient(135deg, rgba(224,123,0,0.9), rgba(245,166,35,0.9));
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 14px;
+    padding: 18px 22px;
+    box-shadow: 0 16px 48px rgba(224,123,0,0.4), inset 0 1px 0 rgba(255,255,255,0.2);
+    z-index: 2;
+  }
+  .about-badge-num { font-family: 'Cormorant Garamond', serif; font-size: 40px; font-weight: 700; color: white; display: block; line-height: 1; }
+  .about-badge-text { font-size: 11px; font-weight: 500; color: rgba(255,255,255,0.85); margin-top: 4px; line-height: 1.4; }
+  .about-values { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 40px; }
+  .value-card {
+    background: rgba(255,255,255,0.06);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 14px;
+    padding: 22px;
+    border-left: 2px solid var(--crimson);
+    transition: all 0.3s;
+  }
+  .value-card:hover { background: rgba(255,255,255,0.1); transform: translateY(-3px); box-shadow: var(--glass-shadow-hover); }
+  .value-card h4 { font-family: 'Cormorant Garamond', serif; font-size: 17px; font-weight: 700; color: white; margin-bottom: 8px; }
+  .value-card p { font-size: 12px; color: rgba(255,255,255,0.45); line-height: 1.7; font-weight: 300; }
+
+  /* ─── SERVICES ─── */
+  #services { padding: 120px 8%; background: transparent; }
+  .services-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 64px; flex-wrap: wrap; gap: 24px; }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .service-card {
+    background: rgba(255,255,255,0.06);
+    backdrop-filter: blur(20px) saturate(1.5);
+    -webkit-backdrop-filter: blur(20px) saturate(1.5);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px;
+    padding: 40px 32px;
+    position: relative;
+    transition: all 0.4s;
+    overflow: hidden;
+  }
+  .service-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  }
+  .service-card::after {
+    content: '';
+    position: absolute; inset: 0;
+    border-radius: 20px;
+    background: radial-gradient(ellipse at top left, rgba(155,28,46,0.08) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+  .service-card:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); transform: translateY(-6px); box-shadow: var(--glass-shadow-hover); }
+  .service-card:hover::after { opacity: 1; }
+  .service-num {
+    font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 700;
+    color: var(--amber-light); letter-spacing: 2px; margin-bottom: 20px; display: block;
+  }
+  .service-icon {
+    width: 52px; height: 52px;
+    background: linear-gradient(135deg, rgba(155,28,46,0.35), rgba(224,123,0,0.25));
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px; margin-bottom: 20px;
+    box-shadow: 0 4px 16px rgba(155,28,46,0.2);
+  }
+  .service-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 700; color: white; margin-bottom: 12px; }
+  .service-card p { font-size: 13px; line-height: 1.75; color: rgba(255,255,255,0.45); font-weight: 300; }
+  .service-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+  .service-tag {
+    font-size: 11px; font-weight: 500;
+    color: rgba(245,166,35,0.9);
+    background: rgba(245,166,35,0.1);
+    border: 1px solid rgba(245,166,35,0.2);
+    border-radius: 100px; padding: 4px 12px;
+  }
+
+  /* ─── PROCESS ─── */
+  #process { padding: 120px 8%; background: transparent; }
+  .process-header { text-align: center; margin-bottom: 80px; }
+  .process-header .section-eyebrow { justify-content: center; }
+  .process-header .section-body { margin: 0 auto; text-align: center; }
+  .timeline { position: relative; max-width: 920px; margin: 0 auto; }
+  .timeline::before {
+    content: ''; position: absolute;
+    left: 50%; top: 0; bottom: 0; width: 1px;
+    background: linear-gradient(to bottom, rgba(155,28,46,0.8), rgba(245,166,35,0.6), transparent);
+    transform: translateX(-50%);
+  }
+  .timeline-step { display: grid; grid-template-columns: 1fr 60px 1fr; gap: 0; margin-bottom: 52px; align-items: start; }
+  .timeline-step:nth-child(odd) .step-content { grid-column: 1; text-align: right; padding-right: 40px; }
+  .timeline-step:nth-child(odd) .step-empty { grid-column: 3; }
+  .timeline-step:nth-child(even) .step-content { grid-column: 3; text-align: left; padding-left: 40px; }
+  .timeline-step:nth-child(even) .step-empty { grid-column: 1; }
+  .step-dot-col { grid-column: 2; display: flex; justify-content: center; align-items: flex-start; padding-top: 4px; }
+  .step-dot {
+    width: 50px; height: 50px;
+    background: linear-gradient(135deg, var(--crimson), #c02035);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px; font-weight: 700; color: white;
+    border: 3px solid rgba(10,6,18,0.8);
+    box-shadow: 0 0 0 1px rgba(155,28,46,0.5), 0 8px 24px rgba(155,28,46,0.4);
+    flex-shrink: 0;
+  }
+  .step-content h3 { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 700; color: white; margin-bottom: 8px; }
+  .step-content p { font-size: 13px; color: rgba(255,255,255,0.4); line-height: 1.7; font-weight: 300; }
+
+  /* ─── TEAM ─── */
+  #team { padding: 120px 8%; background: transparent; }
+  .team-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 60px; flex-wrap: wrap; gap: 24px; }
+  .founders-row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px; }
+  .founder-card {
+    background: rgba(155,28,46,0.18);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(155,28,46,0.3);
+    border-radius: 20px; overflow: hidden;
+    display: grid; grid-template-columns: 180px 1fr;
+    box-shadow: 0 20px 60px rgba(155,28,46,0.15), inset 0 1px 0 rgba(255,255,255,0.1);
+    transition: all 0.3s;
+  }
+  .founder-card:hover { border-color: rgba(155,28,46,0.5); box-shadow: 0 32px 80px rgba(155,28,46,0.25); transform: translateY(-4px); }
+  .founder-photo { background: rgba(0,0,0,0.3); display: flex; align-items: flex-end; justify-content: center; min-height: 220px; overflow: hidden; }
+  .founder-photo-placeholder {
+    width: 100%; height: 220px;
+    background: linear-gradient(135deg, rgba(155,28,46,0.5), rgba(107,13,30,0.9));
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 56px; font-weight: 700; color: rgba(255,255,255,0.2);
+  }
+  .founder-info { padding: 28px; color: white; }
+  .founder-role { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--amber-light); margin-bottom: 8px; display: block; }
+  .founder-info h3 { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 700; margin-bottom: 14px; }
+  .founder-info p { font-size: 13px; line-height: 1.7; color: rgba(255,255,255,0.6); font-weight: 300; margin-bottom: 16px; }
+  .founder-stats { display: flex; gap: 20px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,0.12); }
+  .f-stat { text-align: center; }
+  .f-stat-num { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 700; color: var(--amber-light); display: block; }
+  .f-stat-label { font-size: 11px; color: rgba(255,255,255,0.4); }
+
+  .counselors-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .counselor-card {
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px; padding: 24px 18px; text-align: center;
+    transition: all 0.3s;
+  }
+  .counselor-card:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: rgba(155,28,46,0.4);
+    transform: translateY(-6px);
+    box-shadow: var(--glass-shadow-hover);
+  }
+  .counselor-avatar {
+    width: 64px; height: 64px; border-radius: 50%;
+    margin: 0 auto 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px; font-weight: 700; color: white;
+    border: 1px solid rgba(255,255,255,0.15);
+  }
+  .counselor-card h4 { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 700; color: white; margin-bottom: 4px; }
+  .counselor-role-tag { font-size: 11px; font-weight: 600; color: var(--amber-light); letter-spacing: 0.5px; margin-bottom: 12px; display: block; }
+  .counselor-card p { font-size: 12px; color: rgba(255,255,255,0.4); line-height: 1.6; font-weight: 300; }
+
+  .peers-strip {
+    margin-top: 48px;
+    background: rgba(255,255,255,0.04);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 20px; padding: 40px;
+  }
+  .peers-strip h3 { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 700; color: white; margin-bottom: 8px; }
+  .peers-strip p { font-size: 14px; color: rgba(255,255,255,0.4); margin-bottom: 28px; font-weight: 300; }
+  .peers-grid { display: flex; flex-wrap: wrap; gap: 10px; }
+  .peer-chip {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px; padding: 10px 16px;
+    display: flex; flex-direction: column; gap: 2px;
+    transition: all 0.25s;
+  }
+  .peer-chip:hover { background: rgba(255,255,255,0.1); border-color: rgba(245,166,35,0.3); }
+  .peer-chip .peer-name { font-weight: 600; font-size: 13px; color: white; }
+  .peer-chip .peer-school { font-size: 11px; color: var(--amber-light); font-weight: 500; }
+  .peer-chip .peer-major { font-size: 11px; color: rgba(255,255,255,0.35); }
+
+  /* ─── SUCCESS CASES ─── */
+  #cases { padding: 120px 8%; background: transparent; }
+  .cases-header { text-align: center; margin-bottom: 72px; }
+  .cases-header .section-eyebrow { justify-content: center; }
+  .cases-tabs {
+    display: flex; gap: 0; justify-content: center;
+    margin-bottom: 48px;
+    background: rgba(255,255,255,0.06);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px; overflow: hidden;
+    width: fit-content; margin-left: auto; margin-right: auto;
+  }
+  .cases-tab {
+    padding: 12px 30px; font-size: 14px; font-weight: 500;
+    color: rgba(255,255,255,0.5); cursor: pointer;
+    border: none; background: transparent; transition: all 0.2s; letter-spacing: 0.3px;
+  }
+  .cases-tab.active { background: linear-gradient(135deg, var(--crimson), #c02035); color: white; box-shadow: 0 4px 16px var(--crimson-glow); }
+  .cases-panel { display: none; }
+  .cases-panel.active { display: block; }
+  .cases-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .case-card {
+    background: rgba(255,255,255,0.06);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 16px; padding: 28px;
+    transition: all 0.3s; position: relative; overflow: hidden;
+  }
+  .case-card::before {
+    content: ''; position: absolute; top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: linear-gradient(to bottom, var(--crimson), var(--amber));
+  }
+  .case-card:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); transform: translateY(-4px); box-shadow: var(--glass-shadow-hover); }
+  .case-uni { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 700; color: white; margin-bottom: 4px; }
+  .case-major { font-size: 12px; color: var(--amber-light); font-weight: 500; letter-spacing: 0.5px; margin-bottom: 16px; }
+  .case-scores { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }
+  .score-pill {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px; padding: 6px 12px;
+    font-family: 'Space Mono', monospace; font-size: 12px; font-weight: 700; color: white;
+  }
+  .score-pill span { font-size: 10px; color: rgba(255,255,255,0.35); font-weight: 400; margin-left: 4px; }
+  .case-activities { font-size: 12px; color: rgba(255,255,255,0.38); line-height: 1.7; font-weight: 300; }
+
+  .uk-cases-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 28px; }
+  .uk-uni-card {
+    background: rgba(255,255,255,0.06);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px; padding: 20px; text-align: center;
+    transition: all 0.25s;
+  }
+  .uk-uni-card:hover { background: rgba(255,255,255,0.1); border-color: rgba(245,166,35,0.3); }
+  .uk-uni-card h4 { font-family: 'Cormorant Garamond', serif; font-size: 16px; font-weight: 700; color: white; margin-bottom: 6px; }
+  .uk-uni-card .accepts { font-size: 13px; color: var(--amber-light); font-weight: 600; }
+  .uk-spotlight { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 20px; }
+  .spotlight-card {
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-left: 2px solid var(--amber);
+    border-radius: 14px; padding: 24px;
+    transition: all 0.3s;
+  }
+  .spotlight-card:hover { background: rgba(255,255,255,0.09); transform: translateY(-3px); }
+  .spotlight-card .s-uni { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 700; color: white; margin-bottom: 8px; }
+  .spotlight-card .s-major { font-size: 11px; color: var(--amber-light); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 12px; }
+  .spotlight-card .s-scores { font-family: 'Space Mono', monospace; font-size: 12px; color: rgba(255,255,255,0.5); margin-bottom: 10px; line-height: 1.8; }
+  .spotlight-card .s-activity { font-size: 12px; color: rgba(255,255,255,0.35); line-height: 1.6; font-weight: 300; }
+
+  /* ─── REQUIREMENTS ─── */
+  #requirements { padding: 120px 8%; background: transparent; }
+  .req-header { text-align: center; margin-bottom: 72px; }
+  .req-header .section-eyebrow { justify-content: center; }
+  .req-tabs {
+    display: flex; gap: 0; justify-content: center;
+    margin-bottom: 48px;
+    background: rgba(255,255,255,0.06);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px; overflow: hidden;
+    width: fit-content; margin: 0 auto 48px;
+  }
+  .req-tab {
+    padding: 12px 34px; font-size: 14px; font-weight: 500;
+    color: rgba(255,255,255,0.5); cursor: pointer;
+    border: none; background: transparent; transition: all 0.2s;
+  }
+  .req-tab.active { background: linear-gradient(135deg, var(--crimson), #c02035); color: white; }
+  .req-panel { display: none; }
+  .req-panel.active { display: block; }
+  .req-tiers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .req-tier {
+    background: rgba(255,255,255,0.06);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px; padding: 36px 30px;
+    transition: all 0.3s;
+  }
+  .req-tier:hover { background: rgba(255,255,255,0.09); transform: translateY(-3px); }
+  .req-tier.featured {
+    background: rgba(155,28,46,0.22);
+    border-color: rgba(155,28,46,0.4);
+    box-shadow: 0 20px 60px rgba(155,28,46,0.2), inset 0 1px 0 rgba(255,255,255,0.1);
+  }
+  .req-tier.featured:hover { background: rgba(155,28,46,0.28); }
+  .req-tier h3 { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 700; color: white; margin-bottom: 8px; }
+  .req-tier .req-score-label { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 1.5px; color: var(--amber-light); text-transform: uppercase; margin-bottom: 14px; display: block; }
+  .req-score-row {
+    background: rgba(155,28,46,0.2);
+    border: 1px solid rgba(155,28,46,0.3);
+    border-radius: 10px; padding: 12px 16px;
+    margin-bottom: 20px;
+    font-family: 'Space Mono', monospace; font-size: 12px;
+    color: rgba(255,180,180,0.9); font-weight: 700; line-height: 1.8;
+  }
+  .req-tier.featured .req-score-row { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.2); color: white; }
+  .req-list { list-style: none; }
+  .req-list li {
+    padding: 9px 0; border-bottom: 1px solid rgba(255,255,255,0.06);
+    font-size: 13px; color: rgba(255,255,255,0.5);
+    display: flex; gap: 10px; font-weight: 300; line-height: 1.5;
+  }
+  .req-list li::before { content: '→'; color: var(--amber-light); flex-shrink: 0; font-size: 12px; margin-top: 1px; }
+
+  /* ─── RESOURCES ─── */
+  #resources { padding: 120px 8%; background: transparent; }
+  .resources-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 56px; flex-wrap: wrap; gap: 24px; }
+  .resources-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .resource-card {
+    background: rgba(255,255,255,0.06);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px; overflow: hidden;
+    transition: all 0.4s; cursor: pointer;
+  }
+  .resource-card:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); transform: translateY(-6px); box-shadow: var(--glass-shadow-hover); }
+  .resource-img {
+    height: 160px;
+    background: linear-gradient(135deg, rgba(155,28,46,0.6), rgba(224,123,0,0.5));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 52px; position: relative;
+    overflow: hidden;
+  }
+  .resource-img::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 40%, rgba(10,6,18,0.4) 100%); }
+  .resource-body { padding: 24px; }
+  .resource-tag { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 2px; color: var(--amber-light); font-weight: 700; text-transform: uppercase; margin-bottom: 8px; }
+  .resource-body h3 { font-family: 'Cormorant Garamond', serif; font-size: 19px; font-weight: 700; color: white; margin-bottom: 8px; line-height: 1.3; }
+  .resource-body p { font-size: 13px; color: rgba(255,255,255,0.4); line-height: 1.6; font-weight: 300; }
+  .resource-arrow { display: flex; justify-content: flex-end; padding: 12px 24px; border-top: 1px solid rgba(255,255,255,0.08); font-size: 13px; font-weight: 600; color: var(--amber-light); }
+
+  /* ─── CTA ─── */
+  #contact {
+    padding: 120px 8%;
+    text-align: center;
+    position: relative; overflow: hidden;
+    background: transparent;
+  }
+  #contact::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 80% at 50% 50%, rgba(155,28,46,0.3) 0%, transparent 70%);
+  }
+  .cta-content { position: relative; z-index: 2; }
+  .cta-eyebrow { font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--amber-light); margin-bottom: 20px; }
+  .cta-buttons { display: flex; gap: 16px; justify-content: center; margin-top: 48px; flex-wrap: wrap; }
+  .btn-white {
+    background: white; color: var(--charcoal);
+    padding: 16px 40px; border-radius: 10px;
+    font-size: 15px; font-weight: 600;
+    text-decoration: none; display: inline-block;
+    transition: all 0.3s;
+    box-shadow: 0 8px 32px rgba(255,255,255,0.2);
+  }
+  .btn-white:hover { transform: translateY(-3px); box-shadow: 0 16px 48px rgba(255,255,255,0.3); }
+  .btn-outline-white {
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,0.3);
+    color: white; padding: 16px 40px;
+    border-radius: 10px; font-size: 15px; font-weight: 500;
+    text-decoration: none; display: inline-block; transition: all 0.3s;
+  }
+  .btn-outline-white:hover { background: rgba(255,255,255,0.15); border-color: white; transform: translateY(-2px); }
+
+  /* glass divider */
+  .glass-divider {
+    max-width: 600px; margin: 0 auto 56px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    position: relative; z-index: 1;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding: 64px 8% 40px;
+  }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+  .footer-brand p { font-size: 14px; color: rgba(255,255,255,0.35); line-height: 1.7; font-weight: 300; margin: 16px 0 24px; max-width: 280px; }
+  .footer-social { display: flex; gap: 10px; }
+  .social-btn {
+    width: 36px; height: 36px;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    color: rgba(255,255,255,0.4); font-size: 14px; text-decoration: none;
+    transition: all 0.2s;
+  }
+  .social-btn:hover { background: var(--crimson); border-color: var(--crimson); color: white; box-shadow: 0 4px 16px var(--crimson-glow); }
+  .footer-col h4 { font-family: 'Cormorant Garamond', serif; font-size: 16px; font-weight: 700; color: white; margin-bottom: 20px; }
+  .footer-col ul { list-style: none; }
+  .footer-col li { margin-bottom: 10px; }
+  .footer-col a { font-size: 13px; color: rgba(255,255,255,0.35); text-decoration: none; font-weight: 300; transition: color 0.2s; }
+  .footer-col a:hover { color: var(--amber-light); }
+  .footer-bottom { border-top: 1px solid rgba(255,255,255,0.06); padding-top: 32px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  .footer-bottom p { font-size: 12px; color: rgba(255,255,255,0.2); font-weight: 300; }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ─── MOBILE ─── */
+  @media (max-width: 900px) {
+    #home { grid-template-columns: 1fr; }
+    .hero-right { height: 420px; }
+    #about { grid-template-columns: 1fr; }
+    .founders-row { grid-template-columns: 1fr; }
+    .founder-card { grid-template-columns: 1fr; }
+    .counselors-grid { grid-template-columns: repeat(2, 1fr); }
+    .services-grid { grid-template-columns: 1fr; }
+    .cases-grid { grid-template-columns: 1fr; }
+    .uk-cases-grid { grid-template-columns: repeat(2, 1fr); }
+    .uk-spotlight { grid-template-columns: 1fr; }
+    .req-tiers { grid-template-columns: 1fr; }
+    .resources-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .nav-links { display: none; }
+    .timeline::before { left: 24px; }
+    .timeline-step { grid-template-columns: 60px 1fr; }
+    .timeline-step:nth-child(odd) .step-content,
+    .timeline-step:nth-child(even) .step-content { grid-column: 2; text-align: left; padding: 0 0 0 20px; }
+    .step-dot-col { grid-column: 1; grid-row: 1; }
+    .step-empty { display: none; }
+    .hero-sphere { width: 380px; height: 380px; }
+    .hero-sphere-ring { width: 420px; height: 420px; }
+    .hero-sphere-ring-2 { width: 480px; height: 480px; }
+    .hero-uni-logos { right: 8px; }
+    .hero-deco-letter { font-size: 160px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- SCENE BACKGROUND -->
+<div class="scene-bg">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+  <!-- Particles -->
+  <div class="particle" style="width:2px;height:2px;left:15%;animation-duration:18s;animation-delay:0s;"></div>
+  <div class="particle" style="width:1px;height:1px;left:35%;animation-duration:22s;animation-delay:-5s;"></div>
+  <div class="particle" style="width:2px;height:2px;left:55%;animation-duration:16s;animation-delay:-9s;"></div>
+  <div class="particle" style="width:1px;height:1px;left:75%;animation-duration:20s;animation-delay:-3s;"></div>
+  <div class="particle" style="width:2px;height:2px;left:90%;animation-duration:24s;animation-delay:-12s;"></div>
+  <div class="particle" style="width:1px;height:1px;left:25%;animation-duration:19s;animation-delay:-7s;"></div>
+  <div class="particle" style="width:2px;height:2px;left:65%;animation-duration:21s;animation-delay:-15s;"></div>
+  <div class="particle" style="width:1px;height:1px;left:45%;animation-duration:17s;animation-delay:-2s;"></div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#home" class="nav-logo">
+    <div class="nav-logo-mark">LP</div>
+    <span class="nav-logo-text">LumiPath Education</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#team">Team</a></li>
+    <li><a href="#cases">Success Cases</a></li>
+    <li><a href="#requirements">Requirements</a></li>
+    <li><a href="#resources">Resources</a></li>
+    <li><a href="#contact" class="nav-cta">Free Consultation</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="home">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Illuminate Your Path Forward</div>
+    <h1 class="hero-h1">Your Dream School <em>Starts Here</em></h1>
+    <p class="hero-sub">LumiPath Education guides students to the world's most selective universities — with professional expertise, heartfelt guidance, and an unwavering commitment to results that matter.</p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">Book Free Consultation</a>
+      <a href="#cases" class="btn-glass">View Success Cases</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <span class="stat-num">13<span>+</span></span>
+        <div class="stat-label">Years Experience</div>
+      </div>
+      <div>
+        <span class="stat-num">80<span>%</span></span>
+        <div class="stat-label">Reach School Rate</div>
+      </div>
+      <div>
+        <span class="stat-num">300<span>+</span></span>
+        <div class="stat-label">Students Guided</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <!-- 3D Sphere visual -->
+    <div class="hero-sphere-ring-2"></div>
+    <div class="hero-sphere-ring"></div>
+    <div class="hero-sphere"></div>
+
+    <!-- Decorative large letter -->
+    <div class="hero-deco-letter">LP</div>
+
+    <div class="hero-pill">✦ Accepting New Students 2025–26</div>
+    <div class="hero-uni-logos">
+      <div class="uni-badge">Harvard University</div>
+      <div class="uni-badge">Stanford University</div>
+      <div class="uni-badge">UChicago #6</div>
+      <div class="uni-badge">Northwestern #9</div>
+      <div class="uni-badge">Columbia University</div>
+    </div>
+    <div class="hero-card">
+      <div class="hero-card-num">100%</div>
+      <div class="hero-card-text">of students receive personalized one-on-one strategy sessions</div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker-track">
+    <span class="ticker-item"><span class="ticker-dot"></span>Harvard University</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Stanford University</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>University of Chicago</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Northwestern University</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Cornell University</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Columbia University</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Johns Hopkins</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>UC Berkeley</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Oxford University</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Cambridge University</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Duke University</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Vanderbilt University</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Harvard University</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Stanford University</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>University of Chicago</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Northwestern University</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Cornell University</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Columbia University</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Johns Hopkins</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>UC Berkeley</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Oxford University</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Cambridge University</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Duke University</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Vanderbilt University</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-img-col">
+    <div class="about-img-main">
+      <div class="about-badge">
+        <span class="about-badge-num">10+</span>
+        <div class="about-badge-text">Years in International Education</div>
+      </div>
+    </div>
+    <div class="about-img-accent"></div>
+  </div>
+  <div>
+    <div class="section-eyebrow">About LumiPath</div>
+    <h2 class="section-title">Empathy as Foundation. <em>Expertise as Wings.</em></h2>
+    <p class="section-body">Founded on the belief that a plan without execution is empty talk, LumiPath Education accompanies every student through the full journey — from initial assessment through enrollment. We don't just deliver documents; we guide, challenge, and grow alongside you.</p>
+    <div class="about-values">
+      <div class="value-card">
+        <h4>Results & Growth</h4>
+        <p>We pursue both academic outcomes and personal development — a personalized university application plan for every student.</p>
+      </div>
+      <div class="value-card">
+        <h4>Deep Mentorship</h4>
+        <p>Patient discovery of each student's unique story, unlocking potential through genuine listening and guidance.</p>
+      </div>
+      <div class="value-card">
+        <h4>Structured Execution</h4>
+        <p>Quarterly strategy reviews, regular check-ins, and full accountability at every milestone.</p>
+      </div>
+      <div class="value-card">
+        <h4>Proven Outcomes</h4>
+        <p>80% reach-school rate. Students admitted to Top 10 universities across the US, UK, Hong Kong, and Singapore.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="services-header">
+    <div>
+      <div class="section-eyebrow">What We Offer</div>
+      <h2 class="section-title">Comprehensive <em>Application Services</em></h2>
+    </div>
+    <p class="section-body" style="max-width:320px;">Six integrated stages from launch to enrollment — every step guided by experts who've done it before.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card">
+      <span class="service-num">01 — Launch</span>
+      <div class="service-icon">🚀</div>
+      <h3>Official Kickoff</h3>
+      <p>Comprehensive background assessment, overseas study knowledge briefing, and standardized test selection and scheduling.</p>
+      <div class="service-tags">
+        <span class="service-tag">Profile Eval</span>
+        <span class="service-tag">Test Planning</span>
+      </div>
+    </div>
+    <div class="service-card">
+      <span class="service-num">02 — Build</span>
+      <div class="service-icon">📈</div>
+      <h3>Background Enhancement</h3>
+      <p>GPA tracking, standardized test strategy, professional positioning, summer programs, competitions, and extracurricular development.</p>
+      <div class="service-tags">
+        <span class="service-tag">GPA Tracking</span>
+        <span class="service-tag">Summer Programs</span>
+        <span class="service-tag">Activities</span>
+      </div>
+    </div>
+    <div class="service-card">
+      <span class="service-num">03 — Choose</span>
+      <div class="service-icon">🏛️</div>
+      <h3>School & Major Selection</h3>
+      <p>Deep-dive university analysis, reach/match/safety school list construction, campus visit planning, and interview coaching.</p>
+      <div class="service-tags">
+        <span class="service-tag">School List</span>
+        <span class="service-tag">Campus Visits</span>
+      </div>
+    </div>
+    <div class="service-card">
+      <span class="service-num">04 — Write</span>
+      <div class="service-icon">✍️</div>
+      <h3>Essay & Creative Writing</h3>
+      <p>Deep brainstorming sessions, PS/Essay/CV guidance and revision, recommendation letter coaching, Native Writer polish and review.</p>
+      <div class="service-tags">
+        <span class="service-tag">PS / Essays</span>
+        <span class="service-tag">Native Review</span>
+        <span class="service-tag">Rec Letters</span>
+      </div>
+    </div>
+    <div class="service-card">
+      <span class="service-num">05 — Submit</span>
+      <div class="service-icon">📋</div>
+      <h3>Application Submission</h3>
+      <p>Guided online application filing, transcript certification and mailing, standardized score reporting, and final checklist verification.</p>
+      <div class="service-tags">
+        <span class="service-tag">CommonApp</span>
+        <span class="service-tag">Score Sending</span>
+      </div>
+    </div>
+    <div class="service-card">
+      <span class="service-num">06 — After</span>
+      <div class="service-icon">🎓</div>
+      <h3>Post-Decision Support</h3>
+      <p>Waitlist Love Letters, offer comparison advice, visa application, interview simulation, pre-departure training, and housing guidance.</p>
+      <div class="service-tags">
+        <span class="service-tag">Visa Guidance</span>
+        <span class="service-tag">Pre-Departure</span>
+        <span class="service-tag">WL Strategy</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="process-header">
+    <div class="section-eyebrow">How It Works</div>
+    <h2 class="section-title">Our <em>Process</em></h2>
+    <p class="section-body">Turning "mysterious art" into a structured, executable science — every step documented, tracked, and delivered.</p>
+  </div>
+  <div class="timeline">
+    <div class="timeline-step">
+      <div class="step-content">
+        <h3>Program Kickoff</h3>
+        <p>Student completes a detailed profile intake form. We assess potential strengths, application direction, academic history, and standardized test plan.</p>
+      </div>
+      <div class="step-dot-col"><div class="step-dot">01</div></div>
+      <div class="step-empty"></div>
+    </div>
+    <div class="timeline-step">
+      <div class="step-empty"></div>
+      <div class="step-dot-col"><div class="step-dot">02</div></div>
+      <div class="step-content">
+        <h3>Planning Within 1 Month</h3>
+        <p>Based on student's personality and interests, we clarify planning goals, advise on extracurriculars, competitions, summer programs, and course selections.</p>
+      </div>
+    </div>
+    <div class="timeline-step">
+      <div class="step-content">
+        <h3>Strategy Execution</h3>
+        <p>Quarterly reviews every March/June/September/December. Full-spectrum communication: forms, materials, emails. Identify and filter seasonal opportunities.</p>
+      </div>
+      <div class="step-dot-col"><div class="step-dot">03</div></div>
+      <div class="step-empty"></div>
+    </div>
+    <div class="timeline-step">
+      <div class="step-empty"></div>
+      <div class="step-dot-col"><div class="step-dot">04</div></div>
+      <div class="step-content">
+        <h3>Precise School Selection</h3>
+        <p>School counseling aligned with student preferences. Reach/match/safety combination tailored to every consideration — GPA, scores, activities, and goals.</p>
+      </div>
+    </div>
+    <div class="timeline-step">
+      <div class="step-content">
+        <h3>Distinctive Essay Guidance</h3>
+        <p>Multiple brainstorming sessions, unique personal angle identification, Waitlist Love Letter strategy, and expert writing mentor review.</p>
+      </div>
+      <div class="step-dot-col"><div class="step-dot">05</div></div>
+      <div class="step-empty"></div>
+    </div>
+    <div class="timeline-step">
+      <div class="step-empty"></div>
+      <div class="step-dot-col"><div class="step-dot">06</div></div>
+      <div class="step-content">
+        <h3>Enrollment Decision</h3>
+        <p>For students with multiple offers, we provide cross-university comparison support — helping weigh advantages, fit, and personal goals to finalize the best school.</p>
+      </div>
+    </div>
+    <div class="timeline-step">
+      <div class="step-content">
+        <h3>Departure Preparation</h3>
+        <p>Join official school communities, visa and vaccination guidance, housing applications, airport logistics, insurance, and tuition payment information.</p>
+      </div>
+      <div class="step-dot-col"><div class="step-dot">07</div></div>
+      <div class="step-empty"></div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section id="team">
+  <div class="team-header">
+    <div>
+      <div class="section-eyebrow">The People Behind Your Success</div>
+      <h2 class="section-title">Our <em>Expert Team</em></h2>
+    </div>
+    <p class="section-body" style="max-width:300px;">Every mentor brings over a decade of experience in international education and a genuine passion for student growth.</p>
+  </div>
+  <div class="founders-row">
+    <div class="founder-card">
+      <div class="founder-photo">
+        <div class="founder-photo-placeholder">S</div>
+      </div>
+      <div class="founder-info">
+        <span class="founder-role">Co-Founder & Lead Consultant</span>
+        <h3>Sophia Chen</h3>
+        <p>Former admissions reader at a Top-10 US university. 13 years guiding students to Ivy League and Top 10 schools across three continents.</p>
+        <div class="founder-stats">
+          <div class="f-stat"><span class="f-stat-num">13+</span><div class="f-stat-label">Years</div></div>
+          <div class="f-stat"><span class="f-stat-num">150+</span><div class="f-stat-label">Students</div></div>
+          <div class="f-stat"><span class="f-stat-num">80%</span><div class="f-stat-label">Reach Rate</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="founder-card">
+      <div class="founder-photo">
+        <div class="founder-photo-placeholder">M</div>
+      </div>
+      <div class="founder-info">
+        <span class="founder-role">Co-Founder & Strategy Director</span>
+        <h3>Marcus Liu</h3>
+        <p>Cambridge-educated, Oxford-trained. Specializes in UK/EU pathways with deep expertise in Oxbridge personal statement craft and interview preparation.</p>
+        <div class="founder-stats">
+          <div class="f-stat"><span class="f-stat-num">10+</span><div class="f-stat-label">Years</div></div>
+          <div class="f-stat"><span class="f-stat-num">120+</span><div class="f-stat-label">Students</div></div>
+          <div class="f-stat"><span class="f-stat-num">4</span><div class="f-stat-label">Oxbridge</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="counselors-grid">
+    <div class="counselor-card">
+      <div class="counselor-avatar" style="background: linear-gradient(135deg, var(--crimson), #c02035);">A</div>
+      <h4>Amy Park</h4>
+      <span class="counselor-role-tag">US Essay Specialist</span>
+      <p>Yale grad. Expert in personal statement strategy and CommonApp supplemental essays for top US universities.</p>
+    </div>
+    <div class="counselor-card">
+      <div class="counselor-avatar" style="background: linear-gradient(135deg, #6B0D1E, var(--crimson));">J</div>
+      <h4>James Wong</h4>
+      <span class="counselor-role-tag">STEM Pathway Advisor</span>
+      <p>MIT alumnus. Guides students in research, competition strategy, and STEM-focused application narratives.</p>
+    </div>
+    <div class="counselor-card">
+      <div class="counselor-avatar" style="background: linear-gradient(135deg, var(--amber), var(--amber-light));">L</div>
+      <h4>Lisa Tan</h4>
+      <span class="counselor-role-tag">HK/Singapore Expert</span>
+      <p>HKU and NUS specialist. Deep expertise in Hong Kong and Singapore admission systems and scholarship opportunities.</p>
+    </div>
+    <div class="counselor-card">
+      <div class="counselor-avatar" style="background: linear-gradient(135deg, #8B0020, #d02040);">R</div>
+      <h4>Rachel Kim</h4>
+      <span class="counselor-role-tag">Interview & Oxbridge Coach</span>
+      <p>Former Cambridge interviewer. Coaches students for Oxbridge, LSE, and competitive US university interviews.</p>
+    </div>
+  </div>
+  <div class="peers-strip">
+    <h3>Our Students' Destinations</h3>
+    <p>A selection of universities where LumiPath students have been admitted.</p>
+    <div class="peers-grid">
+      <div class="peer-chip"><span class="peer-name">Student A</span><span class="peer-school">Harvard University</span><span class="peer-major">Computer Science</span></div>
+      <div class="peer-chip"><span class="peer-name">Student B</span><span class="peer-school">Stanford University</span><span class="peer-major">Engineering</span></div>
+      <div class="peer-chip"><span class="peer-name">Student C</span><span class="peer-school">Oxford University</span><span class="peer-major">Mathematics</span></div>
+      <div class="peer-chip"><span class="peer-name">Student D</span><span class="peer-school">MIT</span><span class="peer-major">Physics</span></div>
+      <div class="peer-chip"><span class="peer-name">Student E</span><span class="peer-school">Cambridge University</span><span class="peer-major">Economics</span></div>
+      <div class="peer-chip"><span class="peer-name">Student F</span><span class="peer-school">Columbia University</span><span class="peer-major">Pre-Med</span></div>
+      <div class="peer-chip"><span class="peer-name">Student G</span><span class="peer-school">UChicago</span><span class="peer-major">Law</span></div>
+      <div class="peer-chip"><span class="peer-name">Student H</span><span class="peer-school">Rice University</span><span class="peer-major">Economics</span></div>
+      <div class="peer-chip"><span class="peer-name">Student I</span><span class="peer-school">Northwestern</span><span class="peer-major">Journalism</span></div>
+      <div class="peer-chip"><span class="peer-name">Student J</span><span class="peer-school">Vanderbilt</span><span class="peer-major">Media Studies</span></div>
+      <div class="peer-chip"><span class="peer-name">Student K</span><span class="peer-school">NUS Singapore</span><span class="peer-major">Business</span></div>
+      <div class="peer-chip"><span class="peer-name">Student L</span><span class="peer-school">HKU</span><span class="peer-major">Biomedical Eng.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- SUCCESS CASES -->
+<section id="cases">
+  <div class="cases-header">
+    <div class="section-eyebrow">Proven Results</div>
+    <h2 class="section-title">Student <em>Success Cases</em></h2>
+  </div>
+  <div class="cases-tabs">
+    <button class="cases-tab active" onclick="switchTab('us', event)">🇺🇸 United States</button>
+    <button class="cases-tab" onclick="switchTab('uk', event)">🇬🇧 UK / HK</button>
+  </div>
+  <div class="cases-panel active" id="panel-us">
+    <div class="cases-grid">
+      <div class="case-card">
+        <div class="case-uni">#3 Harvard University</div>
+        <div class="case-major">Social Studies · Student A · Domestic International School</div>
+        <div class="case-scores">
+          <div class="score-pill">113<span>TOEFL</span></div>
+          <div class="score-pill">1570<span>SAT</span></div>
+          <div class="score-pill">8 APs<span>(9 courses)</span></div>
+        </div>
+        <div class="case-activities">Youth Academic Social Enterprise Incubator · Founder of Youth Rights Coalition · Science Research Center · Intern at Children's Hospital · Stage Director Junior Musical</div>
+      </div>
+      <div class="case-card">
+        <div class="case-uni">#4 Columbia University</div>
+        <div class="case-major">Political Science · Student B · Overseas International School</div>
+        <div class="case-scores">
+          <div class="score-pill">115<span>TOEFL</span></div>
+          <div class="score-pill">1560<span>SAT</span></div>
+          <div class="score-pill">6 APs<span>(7 courses)</span></div>
+        </div>
+        <div class="case-activities">Model UN Secretary General · Published Op-Ed in Regional Paper · State Debate Champion · Youth Policy Intern · Varsity Tennis Captain</div>
+      </div>
+      <div class="case-card">
+        <div class="case-uni">#6 UChicago</div>
+        <div class="case-major">Economics · Student C · Bilingual School</div>
+        <div class="case-scores">
+          <div class="score-pill">110+<span>TOEFL</span></div>
+          <div class="score-pill">1540+<span>SAT</span></div>
+          <div class="score-pill">5 APs<span>(7 courses)</span></div>
+        </div>
+        <div class="case-activities">School Math Team Co-head · Pioneer Research · Social Media Editor · Michigan Math & Science Scholar · Stanford Pre-collegiate Institute · Ballet & Jazz Dance</div>
+      </div>
+      <div class="case-card">
+        <div class="case-uni">#15 Columbia University</div>
+        <div class="case-major">Engineering · Student Y · Overseas High School</div>
+        <div class="case-scores">
+          <div class="score-pill">8.0<span>IELTS</span></div>
+          <div class="score-pill">145<span>DUOLINGO</span></div>
+        </div>
+        <div class="case-activities">National Chinese Debate Committee · Science Mentorship Program · Mathematical Modeling Program · Youth Expedition Project · Intern at Aromem</div>
+      </div>
+      <div class="case-card">
+        <div class="case-uni">#17 Rice University</div>
+        <div class="case-major">Economics · Student H · Domestic International School</div>
+        <div class="case-scores">
+          <div class="score-pill">110+<span>TOEFL</span></div>
+          <div class="score-pill">1500+<span>SAT</span></div>
+          <div class="score-pill">5 APs<span>(4 courses)</span></div>
+        </div>
+        <div class="case-activities">Wharton Global Youth Investment Challenge · Diamond Challenge · Genius Olympiad · NYU SPS Summer School · Data Science Club · Machine Learning Research</div>
+      </div>
+      <div class="case-card">
+        <div class="case-uni">#10 Carnegie Mellon</div>
+        <div class="case-major">Computer Science · Student Z · Overseas High School</div>
+        <div class="case-scores">
+          <div class="score-pill">1500<span>SAT</span></div>
+        </div>
+        <div class="case-activities">Independent Research: Tennis Player Ranking Prediction with ML · International Council Executive · Scholastic Art & Writing Regional Honorable Mention · HIR Silver Award (Global Top 10%)</div>
+      </div>
+    </div>
+  </div>
+  <div class="cases-panel" id="panel-uk">
+    <div class="uk-cases-grid">
+      <div class="uk-uni-card"><h4>University of Oxford</h4><div class="accepts">1 Admitted</div></div>
+      <div class="uk-uni-card"><h4>Cambridge University</h4><div class="accepts">3 Admitted</div></div>
+      <div class="uk-uni-card"><h4>Imperial College London</h4><div class="accepts">1 Admitted</div></div>
+      <div class="uk-uni-card"><h4>LSE</h4><div class="accepts">3 Admitted</div></div>
+      <div class="uk-uni-card"><h4>UCL</h4><div class="accepts">5+ Admitted</div></div>
+      <div class="uk-uni-card"><h4>University of Bristol</h4><div class="accepts">6 Admitted</div></div>
+      <div class="uk-uni-card"><h4>University of Warwick</h4><div class="accepts">3 Admitted</div></div>
+      <div class="uk-uni-card"><h4>St Andrews University</h4><div class="accepts">2 Admitted</div></div>
+      <div class="uk-uni-card"><h4>University of Hong Kong</h4><div class="accepts">2 Admitted</div></div>
+      <div class="uk-uni-card"><h4>HKUST</h4><div class="accepts">3 Admitted</div></div>
+      <div class="uk-uni-card"><h4>CUHK</h4><div class="accepts">3 Admitted</div></div>
+      <div class="uk-uni-card"><h4>Hong Kong PolyU</h4><div class="accepts">3 Admitted</div></div>
+    </div>
+    <div class="uk-spotlight">
+      <div class="spotlight-card">
+        <div class="s-uni">Oxford University</div>
+        <div class="s-major">Mathematics</div>
+        <div class="s-scores">TOEFL 110+ · 5 AP 5s (incl. Calc BC, Micro & Macro Econ)</div>
+        <div class="s-activity">AMIE · ARML Math Competition · AMC12 · CIS Research Academic Program</div>
+      </div>
+      <div class="spotlight-card">
+        <div class="s-uni">Cambridge University</div>
+        <div class="s-major">Mathematics</div>
+        <div class="s-scores">4 Predicted A* · TOEFL 110+ / IELTS 7.5</div>
+        <div class="s-activity">Physics Bowl Gold · BPhO Gold Award</div>
+      </div>
+      <div class="spotlight-card">
+        <div class="s-uni">University of Hong Kong</div>
+        <div class="s-major">Biomedical Engineering</div>
+        <div class="s-scores">IELTS 7.0 · 1 Actual A* · 3 Predicted A*</div>
+        <div class="s-activity">UKChO Silver · BBO Bronze · PhysicsBowl Contest</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REQUIREMENTS -->
+<section id="requirements">
+  <div class="req-header">
+    <div class="section-eyebrow">What You Need</div>
+    <h2 class="section-title">Application <em>Requirements</em></h2>
+    <p class="section-body" style="margin: 0 auto; text-align:center;">Know what top universities expect — academically and beyond.</p>
+  </div>
+  <div class="req-tabs">
+    <button class="req-tab active" onclick="switchReq('us', event)">🇺🇸 United States</button>
+    <button class="req-tab" onclick="switchReq('uk', event)">🇬🇧 United Kingdom</button>
+    <button class="req-tab" onclick="switchReq('hk', event)">🇭🇰 HK / Singapore</button>
+  </div>
+  <div class="req-panel active" id="req-us">
+    <div class="req-tiers">
+      <div class="req-tier featured">
+        <h3>TOP 10 & Ivy League</h3>
+        <span class="req-score-label">Academic Benchmarks</span>
+        <div class="req-score-row">GPA 3.8+ · TOEFL 110+ · SAT 1540+ / ACT 34+</div>
+        <ul class="req-list">
+          <li>International competition awards (IMO, IOI, ISEF, REGENERON STS, USAMO)</li>
+          <li>Published papers in high-quality academic journals or conferences (IEEE, NATURE)</li>
+          <li>Highly selective summer programs (RSI, SSHI, TASP, SUMAC, ROSS, PROMYS)</li>
+          <li>Founder or core leader of multiple communities or organizations</li>
+          <li>Drove real-world change (policy, nonprofit, tech product, social enterprise)</li>
+          <li>Distinctive cultural background, family story, or personal growth narrative</li>
+        </ul>
+      </div>
+      <div class="req-tier">
+        <h3>TOP 30</h3>
+        <span class="req-score-label">Academic Benchmarks</span>
+        <div class="req-score-row">GPA 3.7+ · TOEFL 108+ · SAT 1500+ / ACT 32+</div>
+        <ul class="req-list">
+          <li>National or state-level academic competitions</li>
+          <li>Independent research projects with mentor guidance or published results</li>
+          <li>Founded or led 1 distinctive activity (nonprofit, app, community project)</li>
+          <li>Core roles in other activities demonstrating sustained impact</li>
+          <li>Deep subject-matter interest with a demonstrable exploration process</li>
+        </ul>
+      </div>
+      <div class="req-tier">
+        <h3>TOP 50</h3>
+        <span class="req-score-label">Academic Benchmarks</span>
+        <div class="req-score-row">GPA 3.5+ · TOEFL 100+</div>
+        <ul class="req-list">
+          <li>Active participation in online courses (Coursera, EdX, Audit University Courses)</li>
+          <li>Clear academic interest area with demonstrated exploration process</li>
+          <li>Active involvement in school and community clubs and volunteer service</li>
+          <li>Sustained commitment in at least one area (music, sports, debate, STEM, writing)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="req-panel" id="req-uk">
+    <div class="req-tiers">
+      <div class="req-tier featured">
+        <h3>Oxford / Cambridge</h3>
+        <span class="req-score-label">Academic Benchmarks</span>
+        <div class="req-score-row">IELTS 7.5+ · 3 A-Levels (A*A*A minimum)</div>
+        <ul class="req-list">
+          <li>Some subjects require additional tests (ESTA, TMUA, etc.)</li>
+          <li>Deep subject passion demonstrated in personal statement</li>
+          <li>Super-curricular activities beyond standard academics</li>
+          <li>Interview readiness — critical thinking under pressure</li>
+        </ul>
+      </div>
+      <div class="req-tier">
+        <h3>Russell Group Universities</h3>
+        <span class="req-score-label">Academic Benchmarks</span>
+        <div class="req-score-row">IELTS 7.0–7.5 · 1–2 A-Levels A*</div>
+        <ul class="req-list">
+          <li>Strong subject focus with relevant academic activities</li>
+          <li>Personal statement showing deep subject interest and reading</li>
+          <li>Work experience or research relevant to chosen field</li>
+        </ul>
+      </div>
+      <div class="req-tier">
+        <h3>Top UK Universities</h3>
+        <span class="req-score-label">Academic Benchmarks</span>
+        <div class="req-score-row">IELTS 6.5–7.0 · 2–3 A-Levels</div>
+        <ul class="req-list">
+          <li>Consistent academic performance across subjects</li>
+          <li>Relevant extracurriculars aligned with major choice</li>
+          <li>Compelling personal statement with authentic voice</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="req-panel" id="req-hk">
+    <div class="req-tiers">
+      <div class="req-tier featured">
+        <h3>HKU / CUHK / HKUST</h3>
+        <span class="req-score-label">Academic Benchmarks</span>
+        <div class="req-score-row">IELTS 7.0+ · 2–3 A-Levels</div>
+        <ul class="req-list">
+          <li>Deep subject insight, especially for STEM programs</li>
+          <li>Strong letters of recommendation from relevant teachers</li>
+          <li>Relevant research or academic projects</li>
+        </ul>
+      </div>
+      <div class="req-tier">
+        <h3>National University of Singapore</h3>
+        <span class="req-score-label">Academic Benchmarks</span>
+        <div class="req-score-row">IELTS 7.0–7.5 · TOEFL 110+ · GPA 3.8+</div>
+        <ul class="req-list">
+          <li>Very high academic standards across all subjects</li>
+          <li>Subject olympiad participation recommended</li>
+          <li>Strong all-round academic and extracurricular profile</li>
+        </ul>
+      </div>
+      <div class="req-tier">
+        <h3>PolyU / CityU HK</h3>
+        <span class="req-score-label">Academic Benchmarks</span>
+        <div class="req-score-row">IELTS 6.5–7.0 · GPA 3.5+</div>
+        <ul class="req-list">
+          <li>Strong academic base with subject relevance</li>
+          <li>Portfolio or creative work required for design programs</li>
+          <li>Interview component for select programs</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESOURCES -->
+<section id="resources">
+  <div class="resources-header">
+    <div>
+      <div class="section-eyebrow">Knowledge & Insights</div>
+      <h2 class="section-title">Student <em>Resources</em></h2>
+    </div>
+    <p class="section-body" style="max-width:300px;">Practical guides, competition lists, and insider knowledge to give every student a head start.</p>
+  </div>
+  <div class="resources-grid">
+    <div class="resource-card">
+      <div class="resource-img">📝</div>
+      <div class="resource-body">
+        <div class="resource-tag">Essay Guide</div>
+        <h3>How to Write a Winning College Personal Statement</h3>
+        <p>From deep brainstorming to final native review — a step-by-step framework for crafting a story that moves admissions officers.</p>
+      </div>
+      <div class="resource-arrow">Read Guide →</div>
+    </div>
+    <div class="resource-card">
+      <div class="resource-img">🏆</div>
+      <div class="resource-body">
+        <div class="resource-tag">Activities</div>
+        <h3>Top Competitions & Summer Programs for Top School Applicants</h3>
+        <p>From RSI to IOI — the competitions and selective programs that signal academic excellence to Ivy League admissions committees.</p>
+      </div>
+      <div class="resource-arrow">Explore List →</div>
+    </div>
+    <div class="resource-card">
+      <div class="resource-img">📅</div>
+      <div class="resource-body">
+        <div class="resource-tag">Timeline</div>
+        <h3>The Complete US Application Calendar: Grade 9 to Enrollment</h3>
+        <p>A month-by-month roadmap covering tests, activities, essays, submissions, and decision timelines for a stress-free application season.</p>
+      </div>
+      <div class="resource-arrow">View Timeline →</div>
+    </div>
+    <div class="resource-card">
+      <div class="resource-img">🎓</div>
+      <div class="resource-body">
+        <div class="resource-tag">School Guide</div>
+        <h3>US vs. UK vs. Hong Kong: Which Study Abroad Destination Is Right for You?</h3>
+        <p>Compare admission systems, campus culture, career outcomes, and cost of attendance to find your best fit destination.</p>
+      </div>
+      <div class="resource-arrow">Compare Now →</div>
+    </div>
+    <div class="resource-card">
+      <div class="resource-img">💬</div>
+      <div class="resource-body">
+        <div class="resource-tag">Interview Prep</div>
+        <h3>Mastering the College Interview: From Oxbridge to Ivy League</h3>
+        <p>Practice frameworks, common question banks, and insider tips from mentors who've coached successful applicants through every major interview format.</p>
+      </div>
+      <div class="resource-arrow">Start Prep →</div>
+    </div>
+    <div class="resource-card">
+      <div class="resource-img">🌍</div>
+      <div class="resource-body">
+        <div class="resource-tag">Pre-Departure</div>
+        <h3>Before You Board: The Ultimate Pre-Departure Checklist</h3>
+        <p>Visa applications, vaccination records, housing, insurance, banking setup, and everything you need before your first day on campus.</p>
+      </div>
+      <div class="resource-arrow">Get Checklist →</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="contact">
+  <div class="cta-content">
+    <div class="cta-eyebrow">Start Your Journey</div>
+    <h2 class="section-title" style="color:white;">Illuminate Your <em>Future Path</em></h2>
+    <div class="glass-divider"></div>
+    <p class="section-body" style="max-width:520px; margin: 0 auto; color:rgba(255,255,255,0.6);">Every great application begins with a single honest conversation. Book your free consultation today and let us help you find the story only you can tell.</p>
+    <div class="cta-buttons">
+      <a href="mailto:info@lumipaths.com" class="btn-white">Book Free Consultation</a>
+      <a href="#cases" class="btn-outline-white">See Our Results First</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div style="display:flex; align-items:center; gap:12px; margin-bottom:0;">
+        <div class="nav-logo-mark">LP</div>
+        <span style="font-family:'Cormorant Garamond',serif; font-size:20px; font-weight:600; color:white;">LumiPath Education</span>
+      </div>
+      <p>Professional expertise. Heartfelt service. Illuminating the path to your future — one student at a time.</p>
+      <div class="footer-social">
+        <a href="#" class="social-btn">微</a>
+        <a href="#" class="social-btn">📧</a>
+        <a href="#" class="social-btn">🔗</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="#services">US University Consulting</a></li>
+        <li><a href="#services">UK / HK / Singapore</a></li>
+        <li><a href="#services">Essay Mentorship</a></li>
+        <li><a href="#services">Strategy Planning</a></li>
+        <li><a href="#services">Interview Coaching</a></li>
+        <li><a href="#services">Pre-Departure Support</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#about">About LumiPath</a></li>
+        <li><a href="#team">Our Team</a></li>
+        <li><a href="#cases">Success Stories</a></li>
+        <li><a href="#requirements">Requirements Guide</a></li>
+        <li><a href="#contact">Contact Us</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Resources</h4>
+      <ul>
+        <li><a href="#resources">Essay Writing Guide</a></li>
+        <li><a href="#resources">Competition List</a></li>
+        <li><a href="#resources">Application Timeline</a></li>
+        <li><a href="#resources">Country Comparison</a></li>
+        <li><a href="#resources">Interview Prep</a></li>
+        <li><a href="#resources">Pre-Departure Checklist</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 LumiPath Education. All rights reserved. 照亮你的未来路</p>
+    <p>US · UK · Hong Kong · Singapore · Canada</p>
+  </div>
+</footer>
+
+<script>
+  function switchTab(which, event) {
+    document.querySelectorAll('.cases-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.cases-panel').forEach(p => p.classList.remove('active'));
+    document.querySelector(`#panel-${which}`).classList.add('active');
+    event.target.classList.add('active');
+  }
+  function switchReq(which, event) {
+    document.querySelectorAll('.req-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.req-panel').forEach(p => p.classList.remove('active'));
+    document.querySelector(`#req-${which}`).classList.add('active');
+    event.target.classList.add('active');
+  }
+
+  // Nav active link on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 100) current = s.id; });
+    navLinks.forEach(a => { a.style.color = a.getAttribute('href') === `#${current}` ? 'white' : ''; });
+  });
+
+  // Subtle parallax on hero sphere
+  window.addEventListener('mousemove', (e) => {
+    const sphere = document.querySelector('.hero-sphere');
+    const ring = document.querySelector('.hero-sphere-ring');
+    if (!sphere) return;
+    const x = (e.clientX / window.innerWidth - 0.5) * 20;
+    const y = (e.clientY / window.innerHeight - 0.5) * 20;
+    sphere.style.transform = `translate(${x}px, ${y}px)`;
+    ring.style.transform = `translate(${x * 0.5}px, ${y * 0.5}px)`;
+  });
+
+  // Scroll-triggered fade-in for cards
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.service-card, .case-card, .resource-card, .value-card, .counselor-card, .req-tier').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
